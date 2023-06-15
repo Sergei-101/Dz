@@ -109,3 +109,37 @@ def main():
         elif step == 'r':
             view()
 
+def edit_phone():
+    contact_phone = reading_csv('phone.csv')
+    foun_cont = input("Введите фамилию которую хотите отредактировать: ")
+    for i in contact_phone:
+        if i['Фамилия'] == foun_cont:
+            i['Фамилия'] = input("Введите новую фамилию - ")
+            i['Имя'] = input("Введите новое Имя - ")
+            i['Номер'] = input("Введите новый Номер - ")
+    with open('phone.csv', 'w', encoding='utf-8') as f_n:
+        F_N_WRITER = csv.DictWriter(f_n, fieldnames=list(contact_phone[0].keys()),
+                                    quoting=csv.QUOTE_NONNUMERIC)
+        F_N_WRITER.writeheader()
+        for d in contact_phone:
+            F_N_WRITER.writerow(d)
+
+
+
+def del_cont():
+    contact_phone = reading_csv('phone.csv')
+    foun_cont = input("Введите фамилию которую хотите Удалить -  ")
+    for i in contact_phone:
+        if i['Фамилия'] == foun_cont:
+            del i['Фамилия']
+            del i['Имя']
+            del i['Номер']
+
+    with open('phone.csv', 'w', encoding='utf-8') as f_n:
+        F_N_WRITER = csv.DictWriter(f_n, fieldnames=list(contact_phone[0].keys()),
+                                    quoting=csv.QUOTE_NONNUMERIC)
+
+        for d in contact_phone:
+            F_N_WRITER.writerow(d)
+
+main()
